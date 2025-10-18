@@ -70,15 +70,29 @@ class MaxHeap {
   }
 }
 
-const heap = new MaxHeap();
-heap.insert(9);
-heap.insert(44);
-heap.insert(22);
-heap.insert(66);
-heap.insert(1);
+function solution(T, R, times) {
+  const heap = new MaxHeap();
+  let totalTime = 0;
+  let count = 0;
 
-console.log(heap);
-console.log(heap.extractMax());
-console.log(heap.extractMax());
-console.log(heap.extractMax());
-console.log(heap.extractMax());
+  for (const time of times) {
+    heap.insert(time);
+
+    totalTime += time;
+    if (totalTime > T) {
+      if (R > 0) {
+        let max_save = heap.extractMax();
+        totalTime -= max_save;
+        R--;
+      } else {
+        return count;
+      }
+    }
+    count++;
+  }
+
+  return count;
+}
+
+console.log(solution(12, 2, [6, 3, 5, 8, 2, 4]));
+console.log(solution(5, 3, [10, 20, 30]));
